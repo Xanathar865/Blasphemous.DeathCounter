@@ -1,4 +1,4 @@
-﻿using Blasphemous.ModdingAPI;
+﻿﻿using Blasphemous.ModdingAPI;
 using Blasphemous.ModdingAPI.Persistence;
 using System;
 using Blasphemous.DeathCounter.Events;
@@ -15,14 +15,12 @@ public class DeathCounter : BlasMod, IPersistentMod
     public string PersistentID => "DEATH_COUNT";
 
     public int Deaths { get; private set; }
-    public string[] Values { get; private set; }
 
     public void LoadGame(SaveData data)
     {
         var DeathCount = data as DeathCountData;
 
         Deaths = DeathCount.saveAmount;
-        Values = DeathCount.saveValues;
     }
 
     public SaveData SaveGame()
@@ -30,30 +28,24 @@ public class DeathCounter : BlasMod, IPersistentMod
         return new DeathCountData()
         {
             saveAmount = Deaths,
-            saveValues = Values
         };
     }
 
     public void ResetGame()
     {
         Deaths = 0;
-        Values = [];
-    }
-
-    public DeathCounter()
-    {
-        Main.DeathCounter.EventHandler.OnPlayerKilled += IncreaseCount;
     }
 
     private void IncreaseCount()
     {
-        Deaths = (int)Math.Sin(Deaths + 1);
+        Deaths++;
         Main.DeathCounter.Log($"DeathCounter: Increasing DeathCount to {Deaths}");
     }
 
     protected override void OnInitialize()
     {
         LogError($"{ModInfo.MOD_NAME} has been initialized");
+        Main.DeathCounter.EventHandler.OnPlayerKilled += IncreaseCount;
     }
 }
 
@@ -62,5 +54,4 @@ public class DeathCountData : SaveData
     public DeathCountData() : base("DEATH_COUNT") { }
 
     public int saveAmount;
-    public string[] saveValues;
 }

@@ -3,7 +3,7 @@ using Gameplay.GameControllers.Penitent;
 
 namespace Blasphemous.DeathCounter.Events;
 
-internal class EventHandler
+public class EventHandler
 {
     public delegate void EventDelegate();
 
