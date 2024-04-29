@@ -3,6 +3,7 @@ using Blasphemous.ModdingAPI.Persistence;
 using System;
 using Blasphemous.DeathCounter.Events;
 using JetBrains.Annotations;
+using Blasphemous.CheatConsole;
 
 namespace Blasphemous.DeathCounter;
 
@@ -14,7 +15,7 @@ public class DeathCounter : BlasMod, IPersistentMod
 
     public string PersistentID => "DEATH_COUNT";
 
-    public int Deaths { get; private set; }
+    public int Deaths { get; set; }
 
     public void LoadGame(SaveData data)
     {
@@ -36,6 +37,7 @@ public class DeathCounter : BlasMod, IPersistentMod
         Deaths = 0;
     }
 
+    //Manages the increase in death count
     private void IncreaseCount()
     {
         Deaths++;
@@ -45,7 +47,14 @@ public class DeathCounter : BlasMod, IPersistentMod
     protected override void OnInitialize()
     {
         LogError($"{ModInfo.MOD_NAME} has been initialized");
+        //Calls for IncreaseCount on player death
         Main.DeathCounter.EventHandler.OnPlayerKilled += IncreaseCount;
+    }
+
+    //Register deathcounter command
+    protected override void OnRegisterServices(ModServiceProvider provider)
+    {
+        provider.RegisterCommand(new DeathCounterCommand());
     }
 }
 
