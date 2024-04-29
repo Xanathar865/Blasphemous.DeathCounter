@@ -1,50 +1,32 @@
-﻿using Gameplay.GameControllers.Entities;
-using Gameplay.GameControllers.Penitent;
+﻿using Blasphemous.DeathCounter;
+using Gameplay.GameControllers.Enemies.Framework.Damage;
+using Gameplay.GameControllers.Entities;
+using Gameplay.GameControllers.Penitent.Damage;
+using HarmonyLib;
+using Tools.Level.Interactables;
 
 namespace Blasphemous.DeathCounter.Events;
 
-internal class EventHandler
+[HarmonyPatch(typeof(Entity), "KillInstanteneously")]
+class Penitent_Death_Patch
 {
-    public delegate void EventDelegate();
+    public static void Postfix(Entity __instance) => Main.DeathCounter.EventHandler.KillEntity(__instance);
+}
 
-    public delegate void StandardEvent();
-    public delegate void HitEvent(ref Hit hit);
-    public delegate void EntityEvent(Entity entity);
+[HarmonyPatch(typeof(PrieDieu), "OnUse")]
+class PrieDieu_Use_Patch
+{
+    public static void Prefix() => Main.DeathCounter.EventHandler.UsePrieDieu();
+}
 
-    public event StandardEvent OnUsePrieDieu;
-    public event StandardEvent OnExitGame;
+[HarmonyPatch(typeof(PenitentDamageArea), "RaiseDamageEvent")]
+class Penitent_Damage_Patch
+{
+    public static void Prefix(ref Hit hit) => Main.DeathCounter.EventHandler.DamagePlayer(ref hit);
+}
 
-    public event HitEvent OnPlayerDamaged;
-    public event HitEvent OnEnemyDamaged;
-
-    public event StandardEvent OnPlayerKilled;
-    public event StandardEvent OnEnemyKilled;
-
-    public void KillEntity(Entity entity)
-    {
-        if (entity is Penitent)
-            OnPlayerKilled?.Invoke();
-        else
-            OnEnemyKilled?.Invoke();
-    }
-
-    public void DamagePlayer(ref Hit hit)
-    {
-        OnPlayerDamaged?.Invoke(ref hit);
-    }
-
-    public void DamageEnemy(ref Hit hit)
-    {
-        OnEnemyDamaged?.Invoke(ref hit);
-    }
-
-    public void UsePrieDieu()
-    {
-        OnUsePrieDieu?.Invoke();
-    }
-
-    public void Reset()
-    {
-        OnExitGame?.Invoke();
-    }
+[HarmonyPatch(typeof(EnemyDamageArea), "TakeDamageAmount")]
+class Enemy_Damage_Patch
+{
+    public static void Prefix(ref Hit hit) => Main.DeathCounter.EventHandler.DamageEnemy(ref hit);
 }

@@ -42,9 +42,4 @@ internal class EventHandler
     {
         OnUsePrieDieu?.Invoke();
     }
-
-    public void Reset()
-    {
-        OnExitGame?.Invoke();
-    }
 }
