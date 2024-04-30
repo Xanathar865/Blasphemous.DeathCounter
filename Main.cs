@@ -8,10 +8,10 @@ namespace Blasphemous.DeathCounter;
 [BepInDependency("Blasphemous.Framework.UI", "0.1.0")]
 public class Main : BaseUnityPlugin
 {
-    public static DeathCounter DeathCounter { get; private set; }
+    public static DeathCount DeathCounter { get; private set; }
 
     private void Start()
     {
-        DeathCounter = new DeathCounter();
+        DeathCounter = new DeathCount();
     }
 }
