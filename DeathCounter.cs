@@ -71,7 +71,7 @@ public class DeathCount : BlasMod, IPersistentMod
     }
 
     //Display text if it isn't already displayed
-    public void OnMapUpdate()
+    public void OnMapOpen()
     {
         if (DeathText == null)
             CreateText();
