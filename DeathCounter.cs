@@ -54,12 +54,12 @@ public class DeathCount : BlasMod, IPersistentMod
     private void IncreaseCount()
     {
         Deaths++;
-        Main.DeathCounter.Log($"DeathCounter: Increasing DeathCount to {Deaths}");
+        ModLog.Debug($"DeathCounter: Increasing DeathCount to {Deaths}");
     }
 
     protected override void OnInitialize()
     {
-        LogError($"{ModInfo.MOD_NAME} has been initialized");
+        ModLog.Error($"{ModInfo.MOD_NAME} has been initialized");
         //Calls for IncreaseCount on player death
         Main.DeathCounter.EventHandler.OnPlayerKilled += IncreaseCount;
     }
