@@ -6,8 +6,8 @@ using System.Collections.Generic;
 
 namespace Blasphemous.DeathCounter;
 
-//Creates OnMapUpdate Method
-[HarmonyPatch(typeof(NewMapMenuWidget), nameof(NewMapMenuWidget.mapEnabled))]
+//Creates OnMapOpen Method
+[HarmonyPatch(typeof(NewMapMenuWidget), nameof(NewMapMenuWidget.OnShow))]
 class MapMenuWidetShow_Patch
 {
     public static void Postfix()
