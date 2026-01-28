@@ -8,12 +8,12 @@
     <Product>Death Counter</Product>
     <Authors>Xanathar865</Authors>
     <Company>Xanathar865</Company>
-    <Description>A mod for Blasphemous 1</Description>
-    <Version>1.0.1</Version>
+    <Description>Adds a Death Counter on the map screen</Description>
+    <Version>1.1.0</Version>
 
     <TargetName>DeathCounter</TargetName>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <RepositoryUrl>https://github.com/Example</RepositoryUrl>
+    <RepositoryUrl>https://github.com/Xanathar865/Blasphemous.DeathCounter</RepositoryUrl>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
@@ -21,7 +21,7 @@
     <PackageReference Include="Blasphemous.CheatConsole" Version="1.0.1" />
     <PackageReference Include="Blasphemous.Framework.UI" Version="0.1.2" />
     <PackageReference Include="Blasphemous.GameLibs" Version="4.0.67" />
-    <PackageReference Include="Blasphemous.ModdingAPI" Version="2.4.1" />
+    <PackageReference Include="Blasphemous.ModdingAPI" Version="3.0.0" />
   </ItemGroup>
 
   <Target Name="Development" AfterTargets="PostBuildEvent">

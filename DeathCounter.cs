@@ -18,26 +18,23 @@ using Tools.Playmaker2.Action;
 
 namespace Blasphemous.DeathCounter;
 
-public class DeathCount : BlasMod, IPersistentMod
+public class DeathCount : BlasMod, ISlotPersistentMod<DeathCountData>
 {
 
     internal Events.EventHandler EventHandler { get; } = new();
     public DeathCount() : base(ModInfo.MOD_ID, ModInfo.MOD_NAME, ModInfo.MOD_AUTHOR, ModInfo.MOD_VERSION) { }
 
-    public string PersistentID => "DEATH_COUNT";
-
     public int Deaths { get; set; }
 
     private Text DeathText;
 
-    public void LoadGame(SaveData data)
+    public void LoadSlot(DeathCountData data)
     {
-        var DeathCount = data as DeathCountData;
 
-        Deaths = DeathCount.saveAmount;
+        Deaths = data.saveAmount;
     }
 
-    public SaveData SaveGame()
+    public DeathCountData SaveSlot()
     {
         return new DeathCountData()
         {
@@ -45,7 +42,7 @@ public class DeathCount : BlasMod, IPersistentMod
         };
     }
 
-    public void ResetGame()
+    public void ResetSlot()
     {
         Deaths = 0;
     }
@@ -59,7 +56,7 @@ public class DeathCount : BlasMod, IPersistentMod
 
     protected override void OnInitialize()
     {
-        ModLog.Error($"{ModInfo.MOD_NAME} has been initialized");
+        ModLog.Info($"{ModInfo.MOD_NAME} has been initialized");
         //Calls for IncreaseCount on player death
         Main.DeathCounter.EventHandler.OnPlayerKilled += IncreaseCount;
     }
@@ -104,9 +101,7 @@ public class DeathCount : BlasMod, IPersistentMod
     }
 }
 
-public class DeathCountData : SaveData
+public class DeathCountData : SlotSaveData
 {
-    public DeathCountData() : base("DEATH_COUNT") { }
-
     public int saveAmount;
 }
