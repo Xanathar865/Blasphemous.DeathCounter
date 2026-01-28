@@ -56,7 +56,7 @@ public class DeathCount : BlasMod, ISlotPersistentMod<DeathCountData>
 
     protected override void OnInitialize()
     {
-        ModLog.Error($"{ModInfo.MOD_NAME} has been initialized");
+        ModLog.Info($"{ModInfo.MOD_NAME} has been initialized");
         //Calls for IncreaseCount on player death
         Main.DeathCounter.EventHandler.OnPlayerKilled += IncreaseCount;
     }
